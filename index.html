@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bentham and Hooker Classification - Print Ready</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Bentham & Hooker's Complete Classification System (202 Families)</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
     :root {
         --color-dicot: #8b0000;
-        --color-gymno: #00008b;
+        --color-gymno: #0f3d59;
         --color-mono: #d35400;
         
         --color-poly: #2980b9;
@@ -30,312 +30,627 @@
     }
 
     body {
-        font-family: 'Open Sans', sans-serif;
+        font-family: 'Outfit', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #d5d8dc;
-        color: #333;
+        background-color: #f1f2f6;
+        color: #2c3e50;
         font-size: 11px;
     }
 
     @media print {
-        @page { size: A3 landscape; margin: 8mm; }
-        body { background-color: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        .main-container { box-shadow: none; max-width: 100%; margin: 0; border: none; }
-        .no-print { display: none; }
-        .grid-container { background: #fff !important; padding: 0 !important; gap: 6px !important; }
+        @page {
+            size: auto;
+            margin: 3mm;
+        }
+        body {
+            background-color: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            font-size: 6.5px !important;
+            line-height: 1.05 !important;
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
+        .main-container {
+            box-shadow: none;
+            max-width: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            border: none;
+            overflow: hidden !important;
+        }
+        .no-print {
+            display: none !important;
+        }
+
+        @media (orientation: portrait) {
+            .grid-container {
+                grid-template-columns: 1fr !important;
+                gap: 2px !important;
+            }
+            .dicot-content {
+                grid-template-columns: 1fr 1fr 1fr !important;
+                gap: 2px !important;
+            }
+            .main-container {
+                transform: scale(0.36) !important;
+                transform-origin: top left !important;
+                width: 277.7% !important;
+                height: 277.7% !important;
+            }
+        }
+        @media (orientation: landscape) {
+            .grid-container {
+                grid-template-columns: 3.3fr 0.8fr 1.1fr !important;
+                gap: 3px !important;
+            }
+            .dicot-content {
+                grid-template-columns: 1.1fr 1fr 0.9fr !important;
+                gap: 2px !important;
+            }
+            .main-container {
+                transform: scale(0.62) !important;
+                transform-origin: top left !important;
+                width: 161.3% !important;
+                height: 161.3% !important;
+            }
+        }
+
+        details.family-card-collapsible[open] {
+            flex: 0 1 auto !important;
+            display: inline-block !important;
+            max-width: 180px !important;
+        }
+        .families-flex-container {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 2px !important;
+            padding: 1px !important;
+        }
+        .super-class-card, .top-level-card, .subclass-card, .series-block, .order-row, .family-card-collapsible {
+            margin: 0.5px !important;
+            padding: 0.5px !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+        .family-desc-content {
+            font-size: 5px !important;
+            line-height: 1 !important;
+            padding: 1px 2px !important;
+        }
+        summary {
+            padding: 1px 2px !important;
+        }
+        .top-level-header {
+            padding: 3px 2px !important;
+        }
+        .super-class-header {
+            padding: 3px !important;
+        }
+        .subclass-header {
+            padding: 2px !important;
+        }
+        .series-summary-header {
+            padding: 2px !important;
+        }
+        .order-header-row {
+            padding: 1px !important;
+        }
     }
 
     .main-container {
         display: flex;
         flex-direction: column;
         width: 100%;
-        max-width: 1680px;
+        max-width: 1720px;
         margin: 10px auto;
         background: #fff;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        border-radius: 6px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        border-radius: 8px;
         overflow: hidden;
     }
 
     .header-main {
-        background-color: #1a252f;
+        background: linear-gradient(135deg, #1e272e 0%, #2f3640 100%);
         color: white;
         text-align: center;
-        padding: 8px;
+        padding: 10px;
         font-family: 'Merriweather', serif;
-        font-size: 18px;
-        letter-spacing: 1px;
+        border-bottom: 2px solid #2f3542;
+        position: relative;
+    }
+
+    .header-main h1 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
-        border-bottom: 2px solid #34495e;
+        color: #f1c40f;
+    }
+
+    /* --- Interactive Toolbar --- */
+    .control-panel {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        background-color: #2f3542;
+        padding: 6px 12px;
+        gap: 12px;
+        border-bottom: 2.5px solid #747d8c;
+    }
+    .control-group-title {
+        color: #f1c40f;
+        font-weight: 700;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .control-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 3px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .control-label {
+        color: #dfe4ea;
+        font-weight: 600;
+        font-size: 9.5px;
+        margin-right: 2px;
+    }
+    .control-group button {
+        background-color: #57606f;
+        color: white;
+        border: none;
+        padding: 3px 12px;
+        border-radius: 3px;
+        font-size: 9px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-width: 90px;
+        text-align: center;
+    }
+    .control-group button:hover {
+        background-color: #e1b12c;
+        color: #2f3542;
     }
     
     .super-class-header {
-        background-color: #2c3e50;
-        color: #f1c40f;
-        text-align: center;
-        padding: 6px;
-        font-weight: 700;
-        font-size: 15px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        border-bottom: 2px solid #34495e;
-    }
-
-    .grid-container {
-        display: grid;
-        grid-template-columns: 3.2fr 0.8fr 1fr;
-        background: #e5e8e8;
-        padding: 8px;
-        gap: 8px;
-        align-items: start;
-    }
-
-    /* --- LEVEL 1: Top Level Cards --- */
-    .top-level-card {
-        background-color: #ffffff;
-        border-radius: 6px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-    .top-level-header {
-        color: white;
+        background-color: #1e272e;
+        color: #ffffff;
         text-align: center;
         padding: 6px;
         font-weight: 700;
         font-size: 13px;
         text-transform: uppercase;
+        letter-spacing: 3px;
+        border-bottom: 2px solid #2f3542;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        list-style: none;
+    }
+    .super-class-header::-webkit-details-marker {
+        display: none;
+    }
+    .super-class-header::before {
+        content: "▼ ";
+        font-size: 8px;
+        margin-right: 4px;
+    }
+    details.super-class-card:not([open]) .super-class-header::before {
+        content: "▶ ";
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 3.3fr 0.8fr 1.1fr;
+        background: #f1f2f6;
+        padding: 6px;
+        gap: 6px;
+        align-items: start;
+    }
+
+    /* --- LEVEL 1: Top Level Cards (Classes) --- */
+    details.top-level-card {
+        background-color: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        display: flex;
+        flex-direction: column;
+    }
+    details.top-level-card[open] {
+        height: 100%;
+    }
+    .top-level-header {
+        color: white;
+        text-align: center;
+        padding: 8px 4px;
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        list-style: none;
+    }
+    .top-level-header::-webkit-details-marker {
+        display: none;
+    }
+    .top-level-header::before {
+        content: "▼ ";
+        font-size: 9px;
+        margin-right: 6px;
+    }
+    details.top-level-card:not([open]) .top-level-header::before {
+        content: "▶ ";
     }
     .top-level-desc {
-        font-size: 9.5px;
+        font-size: 9px;
         font-weight: 400;
         margin-top: 2px;
         text-transform: none;
-        opacity: 0.9;
+        opacity: 0.95;
     }
 
-    /* --- LEVEL 2: Subclass Cards --- */
+    /* --- LEVEL 2: Subclass Collapsible Cards --- */
     .dicot-content {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        background: #f4f6f7;
-        padding: 6px;
-        gap: 6px;
+        grid-template-columns: 1.1fr 1fr 0.9fr;
+        background: #f1f2f6;
+        padding: 4px;
+        gap: 4px;
         flex: 1;
     }
-    .subclass-card {
+
+    @media screen and (max-width: 1024px) {
+        .main-container {
+            margin: 0;
+            border-radius: 0;
+            max-width: 100%;
+        }
+        .grid-container {
+            grid-template-columns: 1fr !important;
+            gap: 12px;
+            padding: 8px;
+        }
+        .dicot-content {
+            grid-template-columns: 1fr !important;
+            gap: 10px;
+            padding: 6px;
+        }
+    }
+    details.subclass-card {
         background-color: #ffffff;
         border-radius: 4px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        border: 1px solid #dcdde1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        display: block;
+        border: 1px solid #ced6e0;
+        margin-bottom: 4px;
     }
-    .subclass-header {
+    details.subclass-card summary.subclass-header {
         color: white;
         text-align: center;
         padding: 6px;
         font-weight: 600;
         font-size: 11px;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        list-style: none;
+    }
+    details.subclass-card summary.subclass-header::-webkit-details-marker {
+        display: none;
+    }
+    details.subclass-card summary.subclass-header::before {
+        content: "▼ ";
+        font-size: 8px;
+        margin-right: 4px;
+    }
+    details.subclass-card:not([open]) summary.subclass-header::before {
+        content: "▶ ";
     }
     .subclass-body {
         padding: 4px;
         display: flex;
         flex-direction: column;
-        background: #f8f9f9;
-        flex: 1;
+        background: #f8f9fa;
+        gap: 4px;
+        border-top: 1px solid #ced6e0;
     }
 
-    /* --- LEVEL 3: Series Card --- */
-    .series-block {
-        display: flex;
-        flex-direction: row;
+    /* --- LEVEL 3: Series Collapsible Card --- */
+    details.series-block {
         background-color: #ffffff;
         border-radius: 4px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        border: 1px solid #d5dbdb;
-        margin-bottom: 6px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        border: 1px solid #ced6e0;
+        margin-bottom: 4px;
+        display: block;
     }
-    .series-left {
-        flex: 0 0 25px;
-        background-color: rgba(0,0,0,0.04);
-        border-right: 1px solid #e5e8e8;
+    details.series-block summary.series-summary-header {
+        padding: 5px 6px;
+        font-weight: 700;
+        font-size: 9.5px;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        color: #2f3542;
+        background-color: rgba(0,0,0,0.02);
+        list-style: none;
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 6px 2px;
+        justify-content: flex-start; /* Removed justify-content: space-between to align content next to the arrow */
     }
-    .series-title-vertical {
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        font-weight: 700;
-        font-size: 10px;
-        color: #2c3e50;
-        letter-spacing: 1px;
-        text-align: center;
+    details.series-block summary.series-summary-header::-webkit-details-marker {
+        display: none;
+    }
+    details.series-block summary.series-summary-header::before {
+        content: "▼ ";
+        font-size: 8px;
+        color: #747d8c;
+        margin-right: 4px;
+    }
+    details.series-block:not([open]) summary.series-summary-header::before {
+        content: "▶ ";
+    }
+    .series-title-text {
+        text-transform: uppercase;
+        margin-right: 6px;
+    }
+    .series-desc-text {
+        font-size: 8px;
+        color: #747d8c;
+        font-weight: 400;
+        font-style: italic;
+        text-align: right;
     }
     .series-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
         padding: 4px;
         background-color: #ffffff;
-    }
-
-    /* --- LEVEL 4: Order Card --- */
-    .order-row {
-        display: flex;
-        background-color: #fbfcfc;
-        border-radius: 3px;
-        border: 1px solid #eaeded;
-        margin-bottom: 4px;
-    }
-    .order-row:last-child { margin-bottom: 0; }
-    
-    .order-left {
-        flex: 0 0 35%;
-        padding: 4px;
-        border-right: 1px dashed #d5dbdb;
-        background-color: #fdfdfd;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        gap: 4px;
+        border-top: 1px solid #dfe4ea;
+    }
+
+    /* --- LEVEL 4: Order Collapsible Card --- */
+    details.order-row {
+        display: flex;
+        flex-direction: column;
+        background-color: #fcfcfc;
+        border-radius: 3px;
+        border: 1px solid #f1f2f6;
+        margin-bottom: 2px;
+    }
+    details.virtual-order-row {
+        border: none !important;
+        margin: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+    
+    details.order-row summary.order-header-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 3px;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        list-style: none;
+    }
+    details.order-row summary.order-header-row::-webkit-details-marker {
+        display: none;
+    }
+    
+    details.order-row summary.order-header-row::before {
+        content: "▼ ";
+        font-size: 8px;
+        color: #747d8c;
+        margin-right: 4px;
+        margin-left: 2px;
+    }
+    details.order-row:not([open]) summary.order-header-row::before {
+        content: "▶ ";
     }
     
     .order-title {
         font-weight: 700;
         color: white;
-        font-size: 10px;
+        font-size: 9px;
         text-transform: uppercase;
-        padding: 3px 6px;
+        padding: 1.5px 4px;
         border-radius: 3px;
         display: inline-block;
     }
 
     .order-desc {
-        font-size: 8.5px;
-        color: #555;
-        background-color: #f4f6f7;
-        border: 1px solid #eaeded;
-        border-radius: 2px;
-        padding: 3px 4px;
-        margin-top: 4px;
-        line-height: 1.1;
+        font-size: 8px;
+        color: #747d8c;
+        font-style: italic;
+        line-height: 1;
+        margin-left: 8px;
     }
 
-    .families-right {
-        flex: 1;
-        padding: 4px;
+    /* --- LEVEL 5 & 6: Family Collapsible Cards --- */
+    .families-flex-container {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
-        justify-content: center;
+        flex-wrap: wrap;
+        gap: 3px;
+        align-items: flex-start;
+        padding: 4px;
+        background-color: #ffffff;
+    }
+    .order-row .families-flex-container {
+        border-top: 1px dashed #dfe4ea;
     }
 
-    /* --- LEVEL 5 & 6: Family Card & Inner Description Box --- */
-    .family-card {
-        background: #ffffff;
-        border: 1px solid #e0e0e0;
-        border-radius: 3px;
-        padding: 4px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-    }
-    .family-card-title {
-        font-weight: 700;
-        color: #1a252f;
-        font-size: 10px;
-    }
-    .family-card-desc {
+    details.family-card-collapsible {
+        background-color: #f1f2f6;
+        border: 1px solid #ced6e0;
+        border-radius: 4px;
         font-size: 8.5px;
-        color: #555;
-        background-color: #f9fbfc;
-        border: 1px solid #e5e8e8;
-        border-radius: 2px;
-        padding: 3px 4px;
-        margin-top: 2px;
-        line-height: 1.1;
+        color: #2c3e50;
+        transition: all 0.2s;
+        box-sizing: border-box;
     }
     
+    details.family-card-collapsible[open] {
+        background-color: #ffffff;
+        border-color: #a4b0be;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        flex: 1 1 100%;
+    }
+
+    /* Highlighted Syllabus Families (Readily Visible) */
+    details.family-card-collapsible.syllabus-highlight {
+        background-color: #fffde7;
+        border: 1.2px solid #f1c40f;
+    }
+
+    details.family-card-collapsible.syllabus-highlight[open] {
+        background-color: #fff9db;
+        border: 1.5px solid #f1c40f;
+        box-shadow: 0 2px 8px rgba(241, 196, 15, 0.15);
+    }
+
+    details.family-card-collapsible summary {
+        padding: 3px 6px;
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        list-style: none;
+    }
+
+    details.family-card-collapsible summary::-webkit-details-marker {
+        display: none;
+    }
+
+    details.family-card-collapsible summary::before {
+        content: "▸ ";
+        color: #747d8c;
+        margin-right: 2px;
+        font-size: 8px;
+    }
+
+    details.family-card-collapsible[open] summary::before {
+        content: "▾ ";
+        color: #2f3542;
+    }
+
+    details.family-card-collapsible.syllabus-highlight summary::before {
+        content: "★ ▸ ";
+        color: #f1c40f;
+    }
+
+    details.family-card-collapsible.syllabus-highlight[open] summary::before {
+        content: "★ ▾ ";
+        color: #f1c40f;
+    }
+
+    .family-desc-content {
+        padding: 3px 6px 5px 6px;
+        border-top: 1px dashed #dfe4ea;
+        color: #57606f;
+        line-height: 1.15;
+        font-size: 8.2px;
+    }
+
+    details.family-card-collapsible.syllabus-highlight .family-desc-content {
+        border-top-color: #f1c40f;
+        color: #7f5f00;
+        font-weight: 500;
+    }
+
     /* Series Specific Tints */
-    .bg-thala .series-left { background-color: var(--color-thala-bg); }
-    .bg-disci .series-left { background-color: var(--color-disci-bg); }
-    .bg-calyci .series-left { background-color: var(--color-calyci-bg); }
-    .bg-inferae .series-left { background-color: var(--color-inferae-bg); }
-    .bg-hetero .series-left { background-color: var(--color-hetero-bg); }
-    .bg-bicar .series-left { background-color: var(--color-bicar-bg); }
-    .bg-curve .series-left { background-color: var(--color-curve-bg); }
+    .bg-thala .series-summary-header { background-color: var(--color-thala-bg) !important; }
+    .bg-disci .series-summary-header { background-color: var(--color-disci-bg) !important; }
+    .bg-calyci .series-summary-header { background-color: var(--color-calyci-bg) !important; }
+    .bg-inferae .series-summary-header { background-color: var(--color-inferae-bg) !important; }
+    .bg-hetero .series-summary-header { background-color: var(--color-hetero-bg) !important; }
+    .bg-bicar .series-summary-header { background-color: var(--color-bicar-bg) !important; }
+    .bg-curve .series-summary-header { background-color: var(--color-curve-bg) !important; }
 
     /* Gymnosperm & Monocot styling */
     .gymno-content { 
-        padding: 6px; 
+        padding: 4px; 
         display: flex; 
         flex-direction: column; 
-        gap: 6px; 
-        background: #f8f9f9;
+        gap: 4px; 
+        background: #f1f2f6;
         flex: 1;
     }
     .gymno-card {
         background: #ffffff;
-        padding: 6px;
+        padding: 4px;
         border-radius: 4px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        border: 1px solid #d5dbdb;
-    }
-    .gymno-title { font-weight: 700; font-size: 11px; color: white; padding: 3px 6px; border-radius: 3px; display: inline-block; text-transform: uppercase;}
-    .gymno-desc { 
-        font-size: 8.5px; 
-        color: #555; 
-        background-color: #f9fbfc;
-        border: 1px solid #eaeded;
-        border-radius: 2px;
-        padding: 3px;
-        margin-top: 4px;
-        line-height: 1.1;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        border: 1px solid #ced6e0;
     }
     
     .mono-content { 
         display: flex; 
         flex-direction: column; 
-        background: #f8f9f9; 
-        padding: 6px;
-        gap: 6px;
+        background: #f1f2f6; 
+        padding: 4px;
+        gap: 4px;
         flex: 1;
     }
     
-    .mono-series-card {
-        display: flex;
-        background-color: #fbfcfc;
+    details.mono-series-card {
+        display: block;
+        background-color: #ffffff;
         border-radius: 4px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        border: 1px solid #eaeded;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        border: 1px solid #ced6e0;
+        margin-bottom: 4px;
     }
-    .mono-left { 
-        flex: 0 0 35%; 
-        padding: 6px; 
-        border-right: 1px dashed #d5dbdb; 
-        background-color: #fdfdfd;
+    details.mono-series-card summary.mono-series-header {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        justify-content: flex-start; /* Removed justify-content: space-between to align content next to the arrow */
+        align-items: center;
+        padding: 5px;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        list-style: none;
+    }
+    details.mono-series-card summary.mono-series-header::-webkit-details-marker {
+        display: none;
+    }
+    details.mono-series-card summary.mono-series-header::before {
+        content: "▼ ";
+        font-size: 8px;
+        color: #747d8c;
+        margin-right: 4px;
+    }
+    details.mono-series-card:not([open]) summary.mono-series-header::before {
+        content: "▶ ";
     }
     .mono-left-title {
         font-weight: 700; 
         color: white; 
-        font-size: 10px;
-        padding: 3px 6px;
+        font-size: 9px;
+        padding: 2px 5px;
         border-radius: 3px;
         display: inline-block;
     }
-    .mono-right { 
-        flex: 1; 
-        padding: 4px; 
-        display: flex; 
-        flex-direction: column; 
-        gap: 4px; 
-        justify-content: center;
-        background-color: #ffffff;
+    .mono-series-desc {
+        font-size: 8px;
+        color: #747d8c;
+        font-style: italic;
+        margin-left: 8px;
+        text-align: right;
     }
 
     @media screen and (max-width: 1024px) {
@@ -392,599 +707,1561 @@
 </head>
 <body>
 
-<div class="no-print" style="text-align: center; margin-bottom: 5px;">
-    <button onclick="window.print()" style="padding: 8px 16px; font-size: 14px; cursor: pointer; background: #2c3e50; color: white; border: none; border-radius: 4px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">🖨️ Print Chart</button>
-</div>
-
 <div class="main-container">
     <div class="header-main">
-        Bentham and Hooker's Classification
-        <div style="font-size: 11px; font-weight: 400; font-family: 'Open Sans', sans-serif; letter-spacing: 0; margin-top: 2px; text-transform: none;">
-            For MSc Botany Syllabus - University of Calicut
+        <h1>Bentham and Hooker's Classification System</h1>
+    </div>
+
+    <!-- Batch Controls -->
+    <div class="control-panel no-print">
+        <span class="control-group-title">Interactive Controls:</span>
+        <div class="control-group">
+            <span class="control-label">Subclasses:</span>
+            <button id="btn-subclasses" onclick="toggleGroupDynamic(this, 'details.subclass-card')">Expand All</button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">Series:</span>
+            <button id="btn-series" onclick="toggleGroupDynamic(this, 'details.series-block, details.mono-series-card')">Expand All</button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">Orders:</span>
+            <button id="btn-orders" onclick="toggleGroupDynamic(this, 'details.order-row')">Expand All</button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">Families:</span>
+            <button id="btn-families" onclick="toggleGroupDynamic(this, 'details.family-card-collapsible')">Expand All</button>
         </div>
     </div>
     
-    <div class="super-class-header">
-        PHANEROGAMS
-    </div>
-    
-    <div class="grid-container">
+    <details class="super-class-card" open>
+        <summary class="super-class-header">
+            PHANEROGAMS (SEED-BEARING PLANTS)
+        </summary>
+        <div class="grid-container">
         <!-- DICOTYLEDONS CARD -->
-        <div class="top-level-card" style="border-top: 4px solid var(--color-dicot);">
-            <div class="top-level-header" style="background-color: var(--color-dicot);">
+        <details class="top-level-card" open style="border-top: 4px solid var(--color-dicot);">
+            <summary class="top-level-header" style="background-color: var(--color-dicot);">
                 DICOTYLEDONS
-                <div class="top-level-desc">Two cotyledons, open vascular bundles, reticulate venation</div>
-            </div>
+                <div class="top-level-desc">Two cotyledons, reticulate venation, pentamerous flowers, ringed vascular bundles</div>
+            </summary>
             
             <div class="dicot-content">
                 <!-- POLYPETALAE CARD -->
-                <div class="subclass-card">
-                    <div class="subclass-header" style="background-color: var(--color-poly);">
+                <details class="subclass-card" open style="border-color: var(--color-poly);">
+                    <summary class="subclass-header" style="background-color: var(--color-poly);">
                         POLYPETALAE
-                        <div class="top-level-desc" style="font-size: 8.5px;">Two distinct whorls of perianth; corolla free</div>
-                    </div>
+                        <div class="top-level-desc" style="font-size: 8px;">Corolla of free distinct petals</div>
+                    </summary>
                     
                     <div class="subclass-body">
-                        <!-- THALAMIFLORAE -->
-                        <div class="series-block bg-thala">
-                            <div class="series-left"><div class="series-title-vertical">THALAMIFLORAE</div></div>
+                        <!-- SERIES THALAMIFLORAE -->
+                        <details class="series-block bg-thala">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">THALAMIFLORAE</span>
+                                <span class="series-desc-text">&mdash; Sepals distinct/free. Petals and stamens hypogynous (inserted on thalamus, below superior ovary).</span>
+                            </summary>
                             <div class="series-content">
-                                <!-- RANALES -->
-                                <div class="order-row" style="border-left: 4px solid #3498db;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #3498db;">RANALES</div>
-                                        <div class="order-desc">Bisexual/Unisexual, hypogynous, many free stamens/carpels</div>
+                                <details class="order-row" style="border-left: 3px solid #3498db;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #3498db;">
+                                            RANALES
+                                        </div>
+                                        <div class="order-desc">Many stamens, apocarpous carpels</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>1. RANUNCULACEAE</summary>
+                                                <div class="family-desc-content">Herbs with alternate dissected leaves. Flowers bisexual, parts free and spirally arranged, stamens numerous, apocarpous.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>2. DILLENIACEAE</summary>
+                                                <div class="family-desc-content">Shrubs, trees, or climbers with alternate simple leaves. Flowers with numerous stamens, carpels separate with arillate seeds.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>3. CALYCANTHACEAE</summary>
+                                                <div class="family-desc-content">Aromatic shrubs with opposite leaves. Flowers with numerous tepals, stamens, and free carpels inside a hollow receptacle.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>4. MAGNOLIACEAE</summary>
+                                                <div class="family-desc-content">Aromatic trees/shrubs with stipules. Showy flowers with spirally arranged perianth, numerous stamens and carpels on an elongated receptacle.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>5. ANONACEAE</summary>
+                                                <div class="family-desc-content">Aromatic trees or shrubs. Flowers trimerous, sepals 3, petals 6, numerous stamens, apocarpous carpels forming aggregate fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>6. MENISPERMACEAE</summary>
+                                                <div class="family-desc-content">Dioecious twining vines. Leaves alternate, palmately veined. Flowers small, unisexual, trimerous, drupaceous fruits with curved seeds.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>7. BERBERIDACEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Flowers trimerous, stamens opening by valves, single carpel with basal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>8. NYMPHAEACEAE</summary>
+                                                <div class="family-desc-content">Aquatic herbs with floating peltate leaves. Flowers large, showy, solitary, numerous petals and stamens on a fleshy disc.</div>
+                                            </details>
                                     </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #3498db;">
-                                            <div class="family-card-title">1. RANUNCULACEAE</div>
-                                            <div class="family-card-desc">Herbs with radially symmetrical flowers, numerous free parts spirally arranged. Alternate, dissected leaves.</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #16a085;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #16a085;">
+                                            PARIETALES
                                         </div>
-                                        <div class="family-card" style="border-left: 3px solid #3498db;">
-                                            <div class="family-card-title">2. MAGNOLIACEAE</div>
-                                            <div class="family-card-desc">Trees/shrubs, aromatic. Bisexual, actinomorphic, 9-12 spirally arranged perianth segments.</div>
-                                        </div>
-                                        <div class="family-card" style="border-left: 3px solid #3498db;">
-                                            <div class="family-card-title">3. MENISPERMACEAE</div>
-                                            <div class="family-card-desc">Dioecious woody vines. Unisexual flowers, 3-8 sepals, no petals.</div>
-                                        </div>
-                                        <div class="family-card" style="border-left: 3px solid #3498db;">
-                                            <div class="family-card-title">4. NYMPHAEACEAE</div>
-                                            <div class="family-card-desc">Aquatic herbs, rhizomatous stems, peltate floating leaves. Large showy flowers.</div>
-                                        </div>
+                                        <div class="order-desc">Parietal placentation</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>9. SARRACENIACEAE</summary>
+                                                <div class="family-desc-content">Carnivorous herbs with pitcher-shaped leaves. Flowers large, nodding, style forming a broad umbrella-like structure.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>10. PAPAVERACEAE</summary>
+                                                <div class="family-desc-content">Herbs with milky/colored latex. Sepals 2-3 caducous, petals 4, stamens numerous, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>11. CRUCIFERAE</summary>
+                                                <div class="family-desc-content">Herbs with watery biting sap. Flowers cruciform, tetradynamous stamens, siliqua fruit with false septum.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>12. CAPPARIDEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs with alternate leaves. Flowers with prominent gynophore or androgynophore, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>13. RESEDACEAE</summary>
+                                                <div class="family-desc-content">Herbs with alternate leaves. Inflorescence a spike or raceme, flowers zygomorphic, stamens on an eccentric disc.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>14. CISTINEAE</summary>
+                                                <div class="family-desc-content">Shrubs or herbs. Flowers regular, showy, sepals 3-5 convolute, stamens numerous, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>15. VIOLARIEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs, alternate stipulate leaves. Flowers zygomorphic, lower petal spurred, stamens 5 forming a ring around ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>16. CANELLACEAE</summary>
+                                                <div class="family-desc-content">Aromatic trees with pellucid-dotted leaves. Flowers regular, stamens fused into a tube, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>17. BIXINEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs with alternate leaves. Flowers regular, stamens numerous, capsule fruit with seeds often surrounded by colored pulp.</div>
+                                            </details>
                                     </div>
-                                </div>
-                                
-                                <!-- PARIETALES -->
-                                <div class="order-row" style="border-left: 4px solid #16a085;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #16a085;">PARIETALES</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #8e44ad;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #8e44ad;">
+                                            POLYGALYNEAE
+                                        </div>
+                                        <div class="order-desc">Irregular flowers, bilocular ovary</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>18. PITTOSPOREAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with resin ducts. Leaves alternate, entire. Flowers regular, pentamerous, parietal/axile placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>19. TREMANDREAE</summary>
+                                                <div class="family-desc-content">Xerophytic shrubs with heath-like habit. Flowers solitary, regular, anthers opening by terminal pores, seeds arillate.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>20. POLYGALAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Zygomorphic papilionaceous-like flowers, 5 sepals (2 large wing-like), 8 stamens fused in a split tube.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>21. VOCHYSIACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with resinous sap. Flowers irregular, one calyx lobe spurred, single stamen, capsule or winged samara fruit.</div>
+                                            </details>
                                     </div>
-                                    <div class="families-right">
-                                        <div class="order-title" style="margin-top: 1px; background-color: #16a085; font-size: 9px; padding: 2px 4px;">POLYGALYNEAE</div>
-                                        <div class="order-desc" style="margin-top: 0; margin-bottom: 2px;">Herbs/shrubs, exstipulate leaves, bilocular ovary</div>
-                                        <div class="family-card" style="border-left: 3px solid #16a085;">
-                                            <div class="family-card-title">5. POLYGALACEAE</div>
-                                            <div class="family-card-desc">Alternate/whorled leaves, 5 sepals (3 petal-like). 8 stamens united in tube.</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #2980b9;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #2980b9;">
+                                            CARYOPHYLLINIAE
+                                        </div>
+                                        <div class="order-desc">Opposite leaves, free-central placentation</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>22. FRANKENIACEAE</summary>
+                                                <div class="family-desc-content">Halophytic salt-glandular herbs. Leaves opposite, small. Flowers regular, petals clawed, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>23. CARYOPHYLLEAE</summary>
+                                                <div class="family-desc-content">Herbs with swollen nodes, opposite entire leaves. Flowers regular, clawed petals, free-central placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>24. PORTULACEAE</summary>
+                                                <div class="family-desc-content">Succulent herbs with opposite or alternate leaves. Flowers regular, sepals 2, stamens opposite petals, capsule opening by a lid.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>25. TAMARISCINEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees with scale-like leaves. Flowers small in spikes, petals free, seeds with a tuft of hairs.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #e67e22;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #e67e22;">
+                                            GUTTIFERALES
+                                        </div>
+                                        <div class="order-desc">Opposite leaves, numerous stamens</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>26. ELATINEAE</summary>
+                                                <div class="family-desc-content">Small aquatic or moisture-loving herbs. Leaves opposite, stipulate. Flowers small, axillary, axile placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>27. HYPERICINEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs with gland-dotted opposite leaves. Flowers yellow, stamens numerous and united in 3-5 bundles.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>28. GUTTIFERAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with resinous yellow sap. Flowers regular, stamens numerous and clustered, seeds without endosperm.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>29. TERNSTROEMIACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Alternate simple leaves without stipules. Flowers solitary, regular, stamens numerous.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>30. DIPTEROCARPEAE</summary>
+                                                <div class="family-desc-content">Resinous forest trees. Flowers sweet-scented, calyx lobes developing into long wings on the fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>31. CHLENACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs endemic to Madagascar. Flowers showy, surrounded by an involucre, stamens numerous, fruit a capsule.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #f1c40f;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #f1c40f;">
+                                            MALVALES
+                                        </div>
+                                        <div class="order-desc">Stellate hairs, monadelphous stamens</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>32. MALVACEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs with stellate hairs, alternate stipulate leaves. Flowers regular, stamens fused in a monadelphous tube, anthers 1-loculed.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>33. STERCULIACEAE</summary>
+                                                <div class="family-desc-content">Herbs/trees with stellate hairs. Alternate simple/compound leaves. Flowers regular, monadelphous stamens, anthers 2-loculed.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>34. TILIACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with mucilage. Leaves alternate, stipulate. Flowers regular, stamens numerous and free or in bundles.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
+                        <!-- SERIES DISCIFLORAE -->
+                        <details class="series-block bg-disci">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">DISCIFLORAE</span>
+                                <span class="series-desc-text">&mdash; Sepals & petals free. Stamens hypogynous, inserted on/around a prominent nectar disc at base of superior ovary.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row" style="border-left: 3px solid #2ecc71;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #2ecc71;">
+                                            GERANIALES
+                                        </div>
+                                        <div class="order-desc">Ovary multi-locular, nectary disc present</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>35. LINEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Leaves alternate, entire. Flowers regular, pentamerous, stamens fused at base, ovary superior.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>36. HUMIRIACEAE</summary>
+                                                <div class="family-desc-content">Balsamiferous trees/shrubs. Leaves alternate. Flowers regular, stamens 10-30 with expanded connectives, drupe fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>37. MALPIGHIACEAE</summary>
+                                                <div class="family-desc-content">Woody climbers with T-shaped hairs. Flowers clawed, calyx with prominent glands, winged samara fruits.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>38. ZYGOPHYLLEAE</summary>
+                                                <div class="family-desc-content">Succulent herbs/shrubs of arid zones. Leaves opposite, pinnate. Flowers regular, stamens with basal scales.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>39. GERANIACEAE</summary>
+                                                <div class="family-desc-content">Herbs with glandular hairs. Alternate lobed leaves. Flowers regular, pentamerous, fruit a schizocarp with elastic awns.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>40. RUTACEAE</summary>
+                                                <div class="family-desc-content">Aromatic plants with pellucid gland-dotted leaves. Flowers regular, stamens on a prominent nectar disc.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>41. SIMARUBEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs with bitter bark. Leaves alternate, pinnate. Flowers small, unisexual or bisexual, disc present.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>42. OCHNACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs with shiny serrate leaves. Flowers yellow, stamens numerous, anthers opening by pores, torus enlarged in fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>43. BURSERACEAE</summary>
+                                                <div class="family-desc-content">Resinous trees/shrubs with aromatic balsam. Leaves alternate, pinnate. Flowers small, nectar disc prominent.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>44. MELIACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with pinnate exstipulate leaves. Flowers in panicles, stamens fused into a characteristic tube.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>45. CHAILLETIACEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees. Leaves alternate, entire. Flowers small, petals bifid, ovary superior, drupe fruit.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #1abc9c;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #1abc9c;">
+                                            OLACALES
+                                        </div>
+                                        <div class="order-desc">Disc cushion-like, superior ovary</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>46. OLACINEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs, often hemiparasitic. Flowers small, calyx enlarging in fruit, disc cup-shaped.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>47. ILICINEAE</summary>
+                                                <div class="family-desc-content">Evergreen trees or shrubs. Leaves alternate, simple. Flowers small, unisexual, drupe with multiple pyrenes.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>48. CYRILLACEAE</summary>
+                                                <div class="family-desc-content">Shrubs or small trees. Leaves alternate, simple, exstipulate. Flowers small in racemes, stamens 5 or 10, fruit a capsule or drupe.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #34495e;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #34495e;">
+                                            CELESTRALES
+                                        </div>
+                                        <div class="order-desc">Disc prominent, stamens alternate with petals</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>49. CELASTRINEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees. Leaves opposite or alternate. Flowers small, regular, disc flat and adnate to calyx, stamens alternate with petals.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>50. STACKHOUSIEAE</summary>
+                                                <div class="family-desc-content">Herbs with alternate simple leaves. Flowers in spikes, corolla tubular with free claws, fruit of 3-5 eremicos.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>51. RHAMNEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs, often thorny. Leaves simple, stipules often modified into spines. Stamens opposite the small hooded petals.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>52. AMPELIDEAE</summary>
+                                                <div class="family-desc-content">Climbing plants with tendrils opposite the leaves. Flowers small, stamens opposite petals, fruit a berry.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #f39c12;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #f39c12;">
+                                            SAPINDALES
+                                        </div>
+                                        <div class="order-desc">Compound leaves, disc prominent</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>53. SAPINDACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs, compound leaves. Flowers small, irregular, nectar disc present. Seeds often arillate.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>54. SABIACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Leaves alternate, simple or pinnate. Flowers irregular, stamens opposite petals, drupe fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>55. ANACARDIACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with resinous/milky sap. Flowers small, disc present, single carpel fertile, drupe fruit.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #7f8c8d;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #7f8c8d;">
+                                            POTIUS GENERA ANOMALA
                                         </div>
                                         
-                                        <div class="order-title" style="margin-top: 4px; background-color: #16a085; font-size: 9px; padding: 2px 4px;">CARYOPHYLLINIAE</div>
-                                        <div class="order-desc" style="margin-top: 0; margin-bottom: 2px;">Regular flowers, free central placentation</div>
-                                        <div class="family-card" style="border-left: 3px solid #16a085;">
-                                            <div class="family-card-title">6. CARYOPHYLLACEAE</div>
-                                            <div class="family-card-desc">Opposite entire leaves, clawed petals, 2-5 united carpels.</div>
-                                        </div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>56. CORIARIEAE</summary>
+                                                <div class="family-desc-content">Shrubs with angled branchlets and opposite leaves. Flowers small, petals fleshy and accrescent in fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>57. MORINGEAE</summary>
+                                                <div class="family-desc-content">Deciduous trees with corky bark, compound leaves. Flowers irregular, 5 unequal petals, stamens 5, capsule elongate.</div>
+                                            </details>
                                     </div>
-                                </div>
- 
-                                <!-- GUTTIFERALES -->
-                                <div class="order-row" style="border-left: 4px solid #e67e22;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #e67e22;">GUTTIFERALES</div>
-                                        <div class="order-desc">Radial flowers, numerous stamens, superior ovary</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #e67e22;">
-                                            <div class="family-card-title">7. GUTTIFERAE (Clusiaceae)</div>
-                                            <div class="family-card-desc">Trees/shrubs, shiny leaves. 4-8 colorful wrinkled petals, clustered stamens.</div>
-                                        </div>
-                                    </div>
-                                </div>
- 
-                                <!-- MALVALES -->
-                                <div class="order-row" style="border-left: 4px solid #f1c40f;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #f1c40f;">MALVALES</div>
-                                        <div class="order-desc">Palmately veined stipulate leaves, stamens united in tube</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #f1c40f;">
-                                            <div class="family-card-title">8. STERCULIACEAE</div>
-                                            <div class="family-card-desc">Alternate simple stipulate leaves. Bisexual, twice as many stamens as petals.</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </details>
                             </div>
-                        </div>
- 
-                        <!-- DISCIFLORAE -->
-                        <div class="series-block bg-disci">
-                            <div class="series-left"><div class="series-title-vertical">DISCIFLORAE</div></div>
+                        </details>
+                        <!-- SERIES CALYCIFLORAE -->
+                        <details class="series-block bg-calyci">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">CALYCIFLORAE</span>
+                                <span class="series-desc-text">&mdash; Sepals fused (calyx cup-like). Stamens and petals perigynous/epigynous. Ovary often inferior.</span>
+                            </summary>
                             <div class="series-content">
-                                <!-- GERANIALES -->
-                                <div class="order-row" style="border-left: 4px solid #2ecc71;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #2ecc71;">GERANIALES</div>
-                                        <div class="order-desc">10 stamens, 5-carpellate superior ovary, nectary disc</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #2ecc71;">
-                                            <div class="family-card-title">9. MELIACEAE</div>
-                                            <div class="family-card-desc">Trees/climbers, pinnate leaves without stipules. Stamens often fused.</div>
+                                <details class="order-row" style="border-left: 3px solid #e74c3c;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #e74c3c;">
+                                            ROSALES
                                         </div>
+                                        <div class="order-desc">Perigynous/epigynous, stipulate leaves</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>58. CONNARACEAE</summary>
+                                                <div class="family-desc-content">Woody climbers or shrubs. Leaves alternate, pinnate. Flowers regular, carpels 5 free, follicular fruits.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>59. LEGUMINOSAE</summary>
+                                                <div class="family-desc-content">Herbs/trees/shrubs, stipulate leaves. Flowers zygomorphic or regular, single carpel, legume or pod fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>60. ROSACEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs/trees, stipulate leaves. Flowers perigynous with hypanthium, stamens numerous, carpels free or fused.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>61. SAXIFRAGEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Leaves alternate or opposite. Flowers regular, perigynous, carpels 2 fused at base, styles free.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>62. CRASSULACEAE</summary>
+                                                <div class="family-desc-content">Succulent herbs with opposite/alternate leaves. Flowers regular, carpels free with scale at base, follicle fruits.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>63. DROSERACEAE</summary>
+                                                <div class="family-desc-content">Insectivorous glandular herbs. Leaves in rosettes with glandular tentacles, circinate vernation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>64. HAMAMELIDEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees with stellate hairs. Leaves alternate. Flowers regular or apetalous, ovary half-inferior.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>65. BRUNIACEAE</summary>
+                                                <div class="family-desc-content">Heath-like shrubs endemic to South Africa. Flowers small in dense heads, calyx adnate to ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>66. HALORAGEAE</summary>
+                                                <div class="family-desc-content">Aquatic or terrestrial herbs. Leaves whorled or alternate. Flowers small, unisexual or bisexual, inferior ovary.</div>
+                                            </details>
                                     </div>
-                                </div>
-                                
-                                <div class="order-row" style="border-left: 4px solid #1abc9c;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #1abc9c;">OLACALES</div>
-                                    </div>
-                                    <div class="families-right"></div>
-                                </div>
-                                <div class="order-row" style="border-left: 4px solid #34495e;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #34495e;">CELASTRALES</div>
-                                    </div>
-                                    <div class="families-right"></div>
-                                </div>
- 
-                                <!-- SAPINDALES -->
-                                <div class="order-row" style="border-left: 4px solid #f39c12;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #f39c12;">SAPINDALES</div>
-                                        <div class="order-desc">Compound leaves, variable stamens</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #f39c12;">
-                                            <div class="family-card-title">10. SAPINDACEAE</div>
-                                            <div class="family-card-desc">Compound leaves, unisexual/bisexual. Fruit a capsule/schizocarp (winged).</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #c0392b;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #c0392b;">
+                                            MYRTALES
                                         </div>
+                                        <div class="order-desc">Syncarpous, epigynous, aromatic</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>67. RHIZOPHOREAE</summary>
+                                                <div class="family-desc-content">Mangrove trees with stilt roots, viviparous. Flowers bisexual, petals fringed, inferior ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>68. COMBRETACEAE</summary>
+                                                <div class="family-desc-content">Trees, shrubs, or climbers. Leaves simple, alternate/opposite. Flowers regular, inferior ovary, winged fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>69. MYRTACEAE</summary>
+                                                <div class="family-desc-content">Aromatic trees/shrubs with gland-dotted leaves and intra-marginal vein. Flowers with numerous free stamens.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>70. MELASTOMACEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs with opposite 3-9 palmately veined leaves. Curved stamens opening by apical pores.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>71. LYTHRARIEAE</summary>
+                                                <div class="family-desc-content">Herbs, shrubs, or trees with opposite leaves. Flowers regular, calyx tube persistent, crinkled petals.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>72. ONAGRARIEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Flowers regular, 4-merous, hypanthium tube present, inferior ovary.</div>
+                                            </details>
                                     </div>
-                                </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #8e44ad;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #8e44ad;">
+                                            PASSIFLORALES
+                                        </div>
+                                        <div class="order-desc">Climbers, parietal placentation, tendrils</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>73. SAMYDACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Leaves alternate, simple. Flowers regular, stamens often alternating with staminodes, capsule fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>74. LOASEAE</summary>
+                                                <div class="family-desc-content">Herbs, often with stinging hairs. Flowers regular, petals hood-like, stamens numerous, capsule fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>75. TURNERACEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Leaves alternate, serrate. Flowers regular, petals yellow and inserted on calyx tube, capsule fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>76. PASSIFLOREAE</summary>
+                                                <div class="family-desc-content">Climbers with axillary tendrils. Flowers regular, large, with a conspicuous corona of threads.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>77. CUCURBITACEAE</summary>
+                                                <div class="family-desc-content">Climbing herbs with tendrils. Leaves palmate. Flowers unisexual, yellow, inferior ovary, pepo fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>78. BEGONIACEAE</summary>
+                                                <div class="family-desc-content">Succulent herbs with asymmetric leaves. Flowers unisexual, tepals colorful, capsule fruit 3-winged.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>79. DATISCEAE</summary>
+                                                <div class="family-desc-content">Dioecious herbs or trees. Leaves alternate. Flowers unisexual, apetalous, inferior ovary, capsule opening at apex.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #9b59b6;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #9b59b6;">
+                                            FICOIDALES
+                                        </div>
+                                        <div class="order-desc">Carpels fused, succulent habit</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>80. CACTEAE</summary>
+                                                <div class="family-desc-content">Succulent xerophytes, stems fleshy and spiny (areoles), leaves reduced. Flowers showy, solitary, inferior ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>81. FICIOIDEAE</summary>
+                                                <div class="family-desc-content">Succulent herbs/shrubs. Flowers regular, petals absent or replaced by petaloid staminodes, capsule fruit.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #2980b9;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #2980b9;">
+                                            UMBELLALES
+                                        </div>
+                                        <div class="order-desc">Flowers in umbels, inferior ovary</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>82. UMBELLIFERAE</summary>
+                                                <div class="family-desc-content">Herbs with furrowed stems, compound sheath-like leaves. Flowers in umbels, schizocarp fruit (cremocarp).</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>83. ARALIACEAE</summary>
+                                                <div class="family-desc-content">Woody plants, leaves compound. Flowers in umbels, inferior ovary, drupe or berry fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>84. CORNACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Leaves opposite, simple. Flowers small, regular, inferior ovary, drupe fruit.</div>
+                                            </details>
+                                    </div>
+                                </details>
                             </div>
-                        </div>
- 
-                        <!-- CALYCIFLORAE -->
-                        <div class="series-block bg-calyci">
-                            <div class="series-left"><div class="series-title-vertical">CALYCIFLORAE</div></div>
-                            <div class="series-content">
-                                <!-- ROSALES -->
-                                <div class="order-row" style="border-left: 4px solid #e74c3c;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #e74c3c;">ROSALES</div>
-                                        <div class="order-desc">Stipulate leaves, perigynous, apocarpous</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #e74c3c;">
-                                            <div class="family-card-title">11. ROSACEAE</div>
-                                            <div class="family-card-desc">Actinomorphic with hypanthium. Fruit achene, follicle, drupe, or pome.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- MYRTALES -->
-                                <div class="order-row" style="border-left: 4px solid #c0392b;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #c0392b;">MYRTALES</div>
-                                        <div class="order-desc">Aromatic leaves, epigynous, 2-5 fused carpels</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #c0392b;">
-                                            <div class="family-card-title">12. RHIZOPHOREAE</div>
-                                            <div class="family-card-desc">Mangroves, opposite stipulate leaves. Inferior syncarpous ovary.</div>
-                                        </div>
-                                        <div class="family-card" style="border-left: 3px solid #c0392b;">
-                                            <div class="family-card-title">13. MELASTOMACEAE</div>
-                                            <div class="family-card-desc">Nodes often thickened, hypanthium present. Poricidal anthers.</div>
-                                        </div>
-                                    </div>
-                                </div>
- 
-                                <!-- FICOIDALES -->
-                                <div class="order-row" style="border-left: 4px solid #9b59b6;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #9b59b6;">FICOIDALES</div>
-                                        <div class="order-desc">Simple leaves, superior syncarpous ovary</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #9b59b6;">
-                                            <div class="family-card-title">14. AIZOACEAE</div>
-                                            <div class="family-card-desc">Succulent herbs/shrubs. Petals absent or few. Parietal placentation.</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="order-row" style="border-left: 4px solid #8e44ad;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #8e44ad;">PASSIFLORALES</div>
-                                    </div>
-                                    <div class="families-right"></div>
-                                </div>
-                                <div class="order-row" style="border-left: 4px solid #2980b9;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #2980b9;">UMBELLALES</div>
-                                    </div>
-                                    <div class="families-right"></div>
-                                </div>
-                            </div>
-                        </div>
+                        </details>
                     </div>
-                </div>
- 
+                </details>
                 <!-- GAMOPETALAE CARD -->
-                <div class="subclass-card">
-                    <div class="subclass-header" style="background-color: var(--color-gamo);">
+                <details class="subclass-card" open style="border-color: var(--color-gamo);">
+                    <summary class="subclass-header" style="background-color: var(--color-gamo);">
                         GAMOPETALAE
-                        <div class="top-level-desc" style="font-size: 8.5px;">Two distinct whorls of perianth; corolla fused</div>
-                    </div>
- 
+                        <div class="top-level-desc" style="font-size: 8px;">Corolla of fused sympetalous petals</div>
+                    </summary>
+                    
                     <div class="subclass-body">
-                        <!-- INFERAE -->
-                        <div class="series-block bg-inferae">
-                            <div class="series-left"><div class="series-title-vertical">INFERAE</div></div>
+                        <!-- SERIES INFERAE -->
+                        <details class="series-block bg-inferae">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">INFERAE</span>
+                                <span class="series-desc-text">&mdash; Calyx tube fused with ovary (epigynous). Ovary inferior. Stamens usually equal corolla lobes.</span>
+                            </summary>
                             <div class="series-content">
-                                <!-- RUBIALES -->
-                                <div class="order-row" style="border-left: 4px solid #27ae60;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #27ae60;">RUBIALES</div>
-                                        <div class="order-desc">Opposite stipulate leaves, tubular epigynous, bicarpellate</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #27ae60;">
-                                            <div class="family-card-title">15. RUBIACEAE</div>
-                                            <div class="family-card-desc">Interpetiolar stipules. Calyx fused, corolla tubular. Inferior ovary.</div>
+                                <details class="order-row" style="border-left: 3px solid #27ae60;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #27ae60;">
+                                            RUBIALES
                                         </div>
+                                        <div class="order-desc">Opposite leaves, interpetiolar stipules</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>85. CAPRIFOLIACEAE</summary>
+                                                <div class="family-desc-content">Shrubs or vines. Leaves opposite, exstipulate. Flowers regular or irregular, inferior ovary, berry fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>86. RUBIACEAE</summary>
+                                                <div class="family-desc-content">Opposite entire leaves with interpetiolar stipules. Flowers sympetalous, inferior ovary.</div>
+                                            </details>
                                     </div>
-                                </div>
-                                <div class="order-row" style="border-left: 4px solid #16a085;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #16a085;">ASTERALES</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #16a085;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #16a085;">
+                                            ASTERALES
+                                        </div>
+                                        <div class="order-desc">Syngenesious anthers, head inflorescence</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>87. VALERIANEAE</summary>
+                                                <div class="family-desc-content">Herbs with opposite leaves. Flowers asymmetric, calyx forming a pappus in fruit, single fertile locule.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>88. DIPSACEAE</summary>
+                                                <div class="family-desc-content">Herbs, leaves opposite. Flowers in dense heads surrounded by an involucre, calyx pappus-like.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>89. CALCEREAE</summary>
+                                                <div class="family-desc-content">Small herbs. Flowers regular or irregular, inferior ovary, fruit a capsule or drupe.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>90. COMPOSITAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs. Flowers in heads (capitula) with involucre, syngenesious anthers, pappus calyx, cypsela fruit.</div>
+                                            </details>
                                     </div>
-                                    <div class="families-right"></div>
-                                </div>
-                                <div class="order-row" style="border-left: 4px solid #f39c12;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #f39c12;">CAMPANALES</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #f39c12;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #f39c12;">
+                                            COMPANALES
+                                        </div>
+                                        <div class="order-desc">Anthers free or connate, inferior ovary</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>91. STYLIDIEAE</summary>
+                                                <div class="family-desc-content">Herbs with leaves in rosettes. Flowers irregular, stamens and style fused into a sensitive column.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>92. GOODENOVIEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Flowers irregular, corolla split on one side, style with a pollen-collecting cup (indusium).</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>93. CAMPANULACEAE</summary>
+                                                <div class="family-desc-content">Herbs with milky sap. Leaves alternate. Flowers regular, bell-shaped corolla, ovary inferior.</div>
+                                            </details>
                                     </div>
-                                    <div class="families-right"></div>
-                                </div>
+                                </details>
                             </div>
-                        </div>
- 
-                        <!-- HETEROMERAE -->
-                        <div class="series-block bg-hetero">
-                            <div class="series-left"><div class="series-title-vertical">HETEROMERAE</div></div>
+                        </details>
+                        <!-- SERIES HETEROMERAE -->
+                        <details class="series-block bg-hetero">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">HETEROMERAE</span>
+                                <span class="series-desc-text">&mdash; Calyx tube free from ovary (hypogynous). Ovary superior. Carpels more than 2.</span>
+                            </summary>
                             <div class="series-content">
-                                <div class="order-row" style="border-left: 4px solid #8e44ad;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #8e44ad;">ERICALES</div>
-                                    </div>
-                                    <div class="families-right"></div>
-                                </div>
-                                <div class="order-row" style="border-left: 4px solid #2980b9;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #2980b9;">PRIMULALES</div>
-                                    </div>
-                                    <div class="families-right"></div>
-                                </div>
-                                <!-- EBENALES -->
-                                <div class="order-row" style="border-left: 4px solid #c0392b;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #c0392b;">EBENALES</div>
-                                        <div class="order-desc">Simple entire leaves, superior compound ovary</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #c0392b;">
-                                            <div class="family-card-title">16. SAPOTACEAE</div>
-                                            <div class="family-card-desc">Trees/shrubs with milky latex. Corolla sympetalous.</div>
+                                <details class="order-row" style="border-left: 3px solid #8e44ad;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #8e44ad;">
+                                            ERICALES
                                         </div>
+                                        <div class="order-desc">Anthers open by pores, superior ovary</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>94. VACCINIACEAE</summary>
+                                                <div class="family-desc-content">Shrubs or small trees. Leaves alternate. Flowers regular, sympetalous, ovary inferior, fruit a berry.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>95. ERICACEAE</summary>
+                                                <div class="family-desc-content">Shrubs with alternate needle-like or leathery leaves. Flowers urn-shaped, anthers opening by pores, superior ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>96. MONOTROPEAE</summary>
+                                                <div class="family-desc-content">Aphyllous saprophytic herbs, white or colorful. Flowers solitary or in racemes, superior ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>97. EPACRIDEAE</summary>
+                                                <div class="family-desc-content">Heath-like shrubs. Leaves small, parallel-veined. Flowers regular, stamens 5, anthers opening by a single slit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>98. DIAPENSIACEAE</summary>
+                                                <div class="family-desc-content">Low alpine herbs or subshrubs. Leaves small, crowded. Flowers regular, stamens 5, staminodes present.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>99. LENNOACEAE</summary>
+                                                <div class="family-desc-content">Root-parasitic herbs, brown or yellow, without chlorophyll. Flowers regular in heads or spikes.</div>
+                                            </details>
                                     </div>
-                                </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #2980b9;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #2980b9;">
+                                            PRIMULALES
+                                        </div>
+                                        <div class="order-desc">Stamens opposite petals, free-central</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>100. PLUMBAGINEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs. Flowers regular, calyx plaited, 5 styles, single ovule on basal funicle.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>101. PRIMULACEAE</summary>
+                                                <div class="family-desc-content">Herbs, leaves in rosettes. Flowers regular, stamens opposite petals, free-central placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>102. MYRSINEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs. Leaves alternate, gland-dotted. Flowers regular, stamens opposite petals, drupe or berry fruit.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #c0392b;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #c0392b;">
+                                            EBENALES
+                                        </div>
+                                        <div class="order-desc">Woody plants, superior ovary, stamens in whorls</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>103. SAPOTACEAE</summary>
+                                                <div class="family-desc-content">Trees/shrubs with milky latex. Flowers regular, sympetalous, stamens in whorls, superior ovary.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>104. EBENACEAE</summary>
+                                                <div class="family-desc-content">Dioecious trees/shrubs, black wood. Flowers unisexual, regular, calyx persistent and accrescent, berry fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>105. STYRACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Leaves alternate, simple. Flowers regular, stamens twice as many as corolla lobes, drupe fruit.</div>
+                                            </details>
+                                    </div>
+                                </details>
                             </div>
-                        </div>
- 
-                        <!-- BICARPELLATAE -->
-                        <div class="series-block bg-bicar">
-                            <div class="series-left"><div class="series-title-vertical">BICARPELLATAE</div></div>
+                        </details>
+                        <!-- SERIES BICARPELLATAE -->
+                        <details class="series-block bg-bicar">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">BICARPELLATAE</span>
+                                <span class="series-desc-text">&mdash; Calyx tube free from ovary (hypogynous). Ovary superior, typically bicarpellate (2 fused carpels).</span>
+                            </summary>
                             <div class="series-content">
-                                <!-- GENTIANALES -->
-                                <div class="order-row" style="border-left: 4px solid #f39c12;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #f39c12;">GENTIANALES</div>
-                                        <div class="order-desc">Simple stipulate leaves, superior bicarpellate ovary</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #f39c12;">
-                                            <div class="family-card-title">17. GENTIANACEAE</div>
-                                            <div class="family-card-desc">Opposite/whorled leaves. Bitter glycosides. Parietal placentation.</div>
+                                <details class="order-row" style="border-left: 3px solid #f39c12;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #f39c12;">
+                                            GENTIANALES
                                         </div>
+                                        <div class="order-desc">Opposite leaves, superior bicarpellate ovary</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>106. OLEACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Leaves opposite. Flowers regular, tetramerous, stamens 2, ovary superior and bilocular.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>107. SALVADORACEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees. Leaves opposite, entire. Flowers small, regular, tetramerous, stamens 4, drupe fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>108. APOCYNACEAE</summary>
+                                                <div class="family-desc-content">Plants with milky latex. Opposite leaves. Flowers regular, sympetalous, stamens 5, fruit of 2 follicles, seeds with a tuft of hairs.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>109. ASCLEPIADEAE</summary>
+                                                <div class="family-desc-content">Plants with milky latex. Opposite leaves. Flowers regular, corona present, pollen in pollinia, gynostegium.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>110. LOGANIACEAE</summary>
+                                                <div class="family-desc-content">Trees or shrubs. Leaves opposite, stipulate. Flowers regular, sympetalous, ovary superior, capsule or berry fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>111. GENTIANEAE</summary>
+                                                <div class="family-desc-content">Herbs, opposite entire leaves. Flowers regular, sympetalous, ovary superior, parietal placentation.</div>
+                                            </details>
                                     </div>
-                                </div>
-                                
-                                <!-- POLEMONEALES -->
-                                <div class="order-row" style="border-left: 4px solid #e67e22;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #e67e22;">POLEMONEALES</div>
-                                        <div class="order-desc">Exstipulate leaves, tubular corolla, epipetalous stamens</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #e67e22;">
-                                            <div class="family-card-title">18. BORAGINACEAE</div>
-                                            <div class="family-card-desc">Alternate basal leaves. Deeply 4-lobed ovary, fruit a schizocarp.</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #e67e22;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #e67e22;">
+                                            POLEMONEALES
                                         </div>
-                                        <div class="family-card" style="border-left: 3px solid #e67e22;">
-                                            <div class="family-card-title">19. CONVOLVULACEAE</div>
-                                            <div class="family-card-desc">Herbs/climbers. Corolla sympetalous, ovary superior bicarpellate.</div>
+                                        <div class="order-desc">Alternate leaves, regular flowers</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>112. POLEMONIACEAE</summary>
+                                                <div class="family-desc-content">Herbs with alternate leaves. Flowers regular, sympetalous, ovary superior and tricarpellary, capsule fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>113. HYDROPHYLLACEAE</summary>
+                                                <div class="family-desc-content">Herbs with alternate leaves. Inflorescence a scorpioid cyme, flowers regular, capsule fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>114. BORAGINEAE</summary>
+                                                <div class="family-desc-content">Hispid herbs with scorpioid cymes. Flowers regular, sympetalous, ovary deeply 4-lobed, gynobasic style.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>115. CONVOLVULACEAE</summary>
+                                                <div class="family-desc-content">Twining herbs/shrubs. Flowers funnel-shaped, sympetalous, ovary superior, bicarpellate.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>116. SOLANACEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs with alternate leaves. Flowers regular, sympetalous, ovary superior, placenta swollen, seeds endospermic.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #d35400;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #d35400;">
+                                            PERSONALES
                                         </div>
+                                        <div class="order-desc">Zygomorphic, didynamous stamens</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>117. SCROPHULARINEAE</summary>
+                                                <div class="family-desc-content">Herbs/shrubs. Flowers zygomorphic, bilabiate, didynamous stamens, superior ovary with numerous ovules on axile placenta.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>118. OROBRANCHACEAE</summary>
+                                                <div class="family-desc-content">Fleshy root-parasitic herbs, brown or purple. Flowers zygomorphic, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>119. LENTIBULARIEAE</summary>
+                                                <div class="family-desc-content">Carnivorous aquatic/wetland herbs. Leaves modified into insect-trapping bladders, free-central placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>120. COLUMELLIACEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees. Leaves opposite. Flowers irregular, stamens 2, ovary inferior, capsule fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>121. GESNERACEAE</summary>
+                                                <div class="family-desc-content">Herbs or shrubs. Leaves opposite. Flowers zygomorphic, ovary superior or semi-inferior, parietal placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>122. BIGNONIACEAE</summary>
+                                                <div class="family-desc-content">Trees/vines with compound leaves. Flowers large, zygomorphic, didynamous stamens, seeds winged in capsule.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>123. PEDALINEAE</summary>
+                                                <div class="family-desc-content">Sticky herbs with glandular hairs. Zygomorphic flowers. Fruit with hooks or spines, axile placentation.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>124. ACANTHACEAE</summary>
+                                                <div class="family-desc-content">Herbs with opposite leaves and cystoliths. Zygomorphic flowers, bracteate, jaculator in fruit capsule.</div>
+                                            </details>
                                     </div>
-                                </div>
- 
-                                <!-- PERSONALES -->
-                                <div class="order-row" style="border-left: 4px solid #d35400;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #d35400;">PERSONALES</div>
-                                        <div class="order-desc">Zygomorphic flowers, didynamous stamens</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #d35400;">
-                                            <div class="family-card-title">20. SCROPHULARIACEAE</div>
-                                            <div class="family-card-desc">Zygomorphic, numerous ovules per locule on axile placentation.</div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #8e44ad;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #8e44ad;">
+                                            LAMIALES
                                         </div>
-                                        <div class="family-card" style="border-left: 3px solid #d35400;">
-                                            <div class="family-card-title">21. PEDALIACEAE</div>
-                                            <div class="family-card-desc">Viscid pubescent leaves. Corolla bilabiate. Capsule with hooks/spines.</div>
+                                        <div class="order-desc">Zygomorphic, drupe/schizocarp, style terminal/gynobasic</div>
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>125. MYOPORINEAE</summary>
+                                                <div class="family-desc-content">Shrubs or trees. Leaves alternate, gland-dotted. Flowers zygomorphic, drupe fruit.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>126. SELAGINEAE</summary>
+                                                <div class="family-desc-content">Small shrubs or herbs. Leaves alternate. Flowers zygomorphic, calyx sheath-like, ovary 2-celled.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>127. VERBENACEAE</summary>
+                                                <div class="family-desc-content">Quadrangular stems, opposite leaves. Zygomorphic flowers, style terminal, fruit drupe or schizocarp.</div>
+                                            </details>
+                                        <details class="family-card-collapsible">
+                                                <summary>128. LABIATAE</summary>
+                                                <div class="family-desc-content">Aromatic herbs, quadrangular stems, opposite leaves. Flowers zygomorphic, verticillaster, deeply 4-lobed ovary, gynobasic style.</div>
+                                            </details>
+                                    </div>
+                                </details>
+                                <details class="order-row" style="border-left: 3px solid #7f8c8d;">
+                                    <summary class="order-header-row">
+                                        <div class="order-title" style="background-color: #7f8c8d;">
+                                            INCERTAE SEDIS
                                         </div>
+                                        
+                                    </summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                                <summary>129. PLANTAGINEAE</summary>
+                                                <div class="family-desc-content">Herbs, leaves in rosettes. Flowers small, green, scarious perianth, capsule opening by a lid (pyxidium).</div>
+                                            </details>
                                     </div>
-                                </div>
- 
-                                <!-- LAMIALES -->
-                                <div class="order-row" style="border-left: 4px solid #8e44ad;">
-                                    <div class="order-left">
-                                        <div class="order-title" style="background-color: #8e44ad;">LAMIALES</div>
-                                        <div class="order-desc">Irregular zygomorphic flowers, reduced stamens</div>
-                                    </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #8e44ad;">
-                                            <div class="family-card-title">22. VERBENACEAE</div>
-                                            <div class="family-card-desc">Quadrangular stems. Terminal panicles, corolla tubular.</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </details>
                             </div>
-                        </div>
+                        </details>
                     </div>
-                </div>
- 
+                </details>
                 <!-- MONOCHLAMYDEAE CARD -->
-                <div class="subclass-card">
-                    <div class="subclass-header" style="background-color: var(--color-monochlamy);">
+                <details class="subclass-card" open style="border-color: var(--color-monochlamy);">
+                    <summary class="subclass-header" style="background-color: var(--color-monochlamy);">
                         MONOCHLAMYDEAE
-                        <div class="top-level-desc" style="font-size: 8.5px;">Only one non-essential whorl or absent</div>
-                    </div>
- 
+                        <div class="top-level-desc" style="font-size: 8px;">Perianth simple (single whorl) or absent</div>
+                    </summary>
+                    
                     <div class="subclass-body">
-                        <!-- CURVEMBRYAE -->
-                        <div class="series-block bg-curve">
-                            <div class="series-left"><div class="series-title-vertical">CURVEMBRYAE</div></div>
+                        <!-- SERIES CURVEMBRYAE -->
+                        <details class="series-block bg-curve">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">CURVEMBRYAE</span>
+                                <span class="series-desc-text">&mdash; Usually single ovule, embryo coiled or curved around the endosperm.</span>
+                            </summary>
                             <div class="series-content">
-                                <div class="order-row" style="border-left: 4px solid #9b59b6;">
-                                    <div class="order-left" style="display:flex; align-items:flex-start;">
-                                        <div class="order-desc" style="margin:0;">Single ovule, embryo coiled around endosperm</div>
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>130. NYCTAGINEAE</summary>
+                                            <div class="family-desc-content">Opposite leaves. Flowers small surrounded by colorful bracts, perianth tubular, 1-seeded anthocarp fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>131. ILLECEBRACEAE</summary>
+                                            <div class="family-desc-content">Small herbs, leaves opposite. Flowers small, green, perianth scarious, single seed.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>132. AMARANTACEAE [sic]</summary>
+                                            <div class="family-desc-content">Herbs with scarious bracteate flowers, perianth dry and membranous, circumscissile capsule.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>133. CHENOPODIACEAE</summary>
+                                            <div class="family-desc-content">Halophytic or succulent herbs. Flowers small, green, perianth fleshy or membranous, fruit a utricle.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>134. PHYTOLACCACEAE</summary>
+                                            <div class="family-desc-content">Herbs or shrubs. Flowers small, green or reddish, carpels numerous in a ring, fruit a berry.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>135. BATIDEAE</summary>
+                                            <div class="family-desc-content">Maritime succulent shrubs. Leaves opposite, small. Flowers unisexual in spikes, fruit a collective cone.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>136. POLYGONACEAE</summary>
+                                            <div class="family-desc-content">Herbs with swollen nodes and ochreate stipules. Flowers small, perianth tepaloid, fruit a triangular achene.</div>
+                                        </details>
                                     </div>
-                                    <div class="families-right">
-                                        <div class="family-card" style="border-left: 3px solid #9b59b6;">
-                                            <div class="family-card-title">23. NYCTAGINACEAE</div>
-                                            <div class="family-card-desc">Perianth of 3-5 tepals. Basal placentation, fruit achene/utricle.</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </details>
                             </div>
-                        </div>
- 
-                        <div class="order-row" style="border-left: 4px solid #3498db;">
-                            <div class="order-left" style="flex: 1; border-right: none;">
-                                <div class="order-title" style="background-color: #3498db;">MULTIOVULATAE AQUATICAE</div>
-                            </div>
-                        </div>
-                        <div class="order-row" style="border-left: 4px solid #e74c3c;">
-                            <div class="order-left" style="flex: 1; border-right: none;">
-                                <div class="order-title" style="background-color: #e74c3c;">MULTIOVULATAE TERROSTRIS</div>
-                            </div>
-                        </div>
-                        <div class="order-row" style="border-left: 4px solid #2ecc71;">
-                            <div class="order-left" style="flex: 1; border-right: none;">
-                                <div class="order-title" style="background-color: #2ecc71;">MICROEMBRAE</div>
-                            </div>
-                        </div>
-                        <div class="order-row" style="border-left: 4px solid #9b59b6;">
-                            <div class="order-left" style="flex: 1; border-right: none;">
-                                <div class="order-title" style="background-color: #9b59b6;">DAPHNALES</div>
-                            </div>
-                        </div>
-                        <div class="order-row" style="border-left: 4px solid #e67e22;">
-                            <div class="order-left" style="flex: 1; border-right: none;">
-                                <div class="order-title" style="background-color: #e67e22;">ACHLAMYDOSPOREAE</div>
-                            </div>
-                        </div>
-                        
-                        <!-- UNISEXUALES -->
-                        <div class="series-block">
-                            <div class="series-left" style="background-color:#fcf3cf;"><div class="series-title-vertical">UNISEXUALES</div></div>
+                        </details>
+                        <!-- SERIES MULTIOVULATAE AQUATICAE -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">MULTIOVULATAE AQUATICAE</span>
+                                <span class="series-desc-text">&mdash; Aquatic plants, ovary syncarpous with numerous ovules.</span>
+                            </summary>
                             <div class="series-content">
-                                <div class="order-row" style="border-left: 4px solid #f1c40f;">
-                                    <div class="families-right" style="padding-left: 0;">
-                                        <div class="family-card" style="border-left: 3px solid #f1c40f;">
-                                            <div class="family-card-title">24. EUPHORBIACEAE</div>
-                                            <div class="family-card-desc">Milky sap. Unisexual, apetalous. 3-loculed ovary.</div>
-                                        </div>
-                                        <div class="family-card" style="border-left: 3px solid #f1c40f;">
-                                            <div class="family-card-title">25. URTICACEAE</div>
-                                            <div class="family-card-desc">Stinging hairs. Perianth 4-5 lobed, fruit achene or drupe.</div>
-                                        </div>
-                                        <div class="family-card" style="border-left: 3px solid #f1c40f;">
-                                            <div class="family-card-title">26. CASUARINACEAE</div>
-                                            <div class="family-card-desc">Whorled branchlets like pine needles. Woody cone fruit.</div>
-                                        </div>
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>137. PODOSTEMONACEAE</summary>
+                                            <div class="family-desc-content">Submerged freshwater thalloid herbs. Flowers small, apetalous, capsule fruit.</div>
+                                        </details>
                                     </div>
-                                </div>
+                                </details>
                             </div>
-                        </div>
-                        
-                        <div class="order-row" style="border-left: 4px solid #34495e;">
-                            <div class="order-left" style="flex: 1; border-right: none;">
-                                <div class="order-title" style="background-color: #34495e;">ORDINES ANOMALI</div>
+                        </details>
+                        <!-- SERIES MULTIOVULATAE TERROSTRIS -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">MULTIOVULATAE TERROSTRIS</span>
+                                <span class="series-desc-text">&mdash; Terrestrial plants, ovary syncarpous with numerous ovules.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>138. NEPENTHACEAE</summary>
+                                            <div class="family-desc-content">Carnivorous climbing pitchers. Leaves modified to pitchers with lid, dioecious, capsule fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>139. CYTINACEAE</summary>
+                                            <div class="family-desc-content">Fleshy root-parasites, without chlorophyll. Flowers unisexual in heads, inferior ovary.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>140. ARISTOLOCHIACEAE</summary>
+                                            <div class="family-desc-content">Herbs or woody vines. Flowers pipe-shaped, dark and fetid, perianth 3-lobed, inferior ovary.</div>
+                                        </details>
+                                    </div>
+                                </details>
                             </div>
-                        </div>
+                        </details>
+                        <!-- SERIES MICROEMBRAE -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">MICROEMBRAE</span>
+                                <span class="series-desc-text">&mdash; Embryo very small, embedded in copious endosperm.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>141. PIPERACEAE</summary>
+                                            <div class="family-desc-content">Herbs/shrubs with swollen nodes, aromatic. Flowers tiny in dense spikes, drupe fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>142. CHLORANTACEAE</summary>
+                                            <div class="family-desc-content">Aromatic shrubs or herbs. Leaves opposite. Flowers tiny, unisexual or bisexual, single carpel.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>143. MYRISTICEAE</summary>
+                                            <div class="family-desc-content">Dioecious trees, red sap. Flowers small, unisexual, single seed with colored aril (mace).</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>144. MONIMIACEAE</summary>
+                                            <div class="family-desc-content">Aromatic trees or shrubs. Opposite leaves. Flowers unisexual, carpels numerous in a hollow receptacle.</div>
+                                        </details>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
+                        <!-- SERIES DAPHNALES -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">DAPHNALES</span>
+                                <span class="series-desc-text">&mdash; Ovary typically with a single carpel and single ovule. Perianth sepaloid.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>145. LAURINEAE</summary>
+                                            <div class="family-desc-content">Aromatic trees/shrubs. Flowers regular, anthers opening by 2-4 valves, single seed drupe.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>146. PROTEACEAE</summary>
+                                            <div class="family-desc-content">Trees or shrubs. Leaves alternate, leathery. Flowers showy, 4 valvate tepals, stamens opposite tepals.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>147. THYMELAEACEAE</summary>
+                                            <div class="family-desc-content">Shrubs or trees, tough fibrous bark. Flowers tubular, 4-5 lobed, single carpel, superior ovary.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>148. PENAEACEAE</summary>
+                                            <div class="family-desc-content">Evergreen ericoid shrubs. Leaves small, opposite. Flowers regular, 4-lobed perianth, ovary superior.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>149. ELAEAGNACEAE</summary>
+                                            <div class="family-desc-content">Shrubs or trees with silvery/brown stellate scales. Flowers regular, single seed.</div>
+                                        </details>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
+                        <!-- SERIES ACHLAMYDOSPOREAE -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">ACHLAMYDOSPOREAE</span>
+                                <span class="series-desc-text">&mdash; Ovary inferior, 1-loculed, 1-3 ovules, seeds without testa.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>150. LORANTHACEAE</summary>
+                                            <div class="family-desc-content">Green hemiparasitic shrubs on tree branches. Flowers showy, inferior ovary, berry with viscin.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>151. SANTALACEAE</summary>
+                                            <div class="family-desc-content">Hemiparasitic trees or shrubs. Flowers small, green, inferior ovary, drupe or nut fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>152. BALANOPHOREAE</summary>
+                                            <div class="family-desc-content">Fleshy root-parasitic herbs, yellow or red. Flowers small in dense club-shaped inflorescences.</div>
+                                        </details>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
+                        <!-- SERIES UNISEXUALES -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">UNISEXUALES</span>
+                                <span class="series-desc-text">&mdash; Flowers unisexual, perianth simple or absent, ovary superior.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>153. EUPHORBIACEAE</summary>
+                                            <div class="family-desc-content">Milky sap, unisexual flowers, tricarpellate syncarpous ovary, regma fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>154. BALANOPEAE</summary>
+                                            <div class="family-desc-content">Dioecious trees/shrubs. Leaves alternate. Flowers unisexual, drupe fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>155. URTICACEAE</summary>
+                                            <div class="family-desc-content">Herbs/shrubs, stinging hairs or cystoliths. Flowers small, unisexual, stamens infolded in bud.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>156. PLATANACEAE</summary>
+                                            <div class="family-desc-content">Deciduous trees with scaling bark. Leaves palmate. Flowers unisexual in dense globose heads.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>157. LEITNERIEAE</summary>
+                                            <div class="family-desc-content">Dioecious shrubs with very light wood. Leaves alternate. Flowers in catkins, drupe fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>158. JUGLANDEAE</summary>
+                                            <div class="family-desc-content">Deciduous aromatic trees. Leaves pinnate. Flowers unisexual, male in catkins, fruit a drupe or nut.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>159. MYRICACEAE</summary>
+                                            <div class="family-desc-content">Aromatic shrubs or trees. Leaves alternate, resinous-dotted. Flowers in catkins, drupe fruit with wax.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>160. CASUARINEAE</summary>
+                                            <div class="family-desc-content">Jointed branchlets, scale leaves. Male flowers in spikes, female in heads forming woody cones.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>161. CUPULIFERAE</summary>
+                                            <div class="family-desc-content">Trees/shrubs. Leaves alternate, simple. Flowers unisexual, male in catkins, female in involucre (cupule), nut fruit.</div>
+                                        </details>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
+                        <!-- SERIES ORDINES ANOMALI -->
+                        <details class="series-block ">
+                            <summary class="series-summary-header">
+                                <span class="series-title-text">ORDINES ANOMALI</span>
+                                <span class="series-desc-text">&mdash; Anomalous families with uncertain relationships, showing diverse characteristics.</span>
+                            </summary>
+                            <div class="series-content">
+                                <details class="order-row virtual-order-row">
+                                    <summary style="display: none;"></summary>
+                                    <div class="families-flex-container">
+                                        <details class="family-card-collapsible">
+                                            <summary>162. SALICINEAE</summary>
+                                            <div class="family-desc-content">Dioecious trees/shrubs. Leaves alternate. Flowers in catkins, seeds with a tuft of long silky hairs.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>163. LACISTEMACEAE</summary>
+                                            <div class="family-desc-content">Shrubs or trees. Leaves alternate. Flowers small in catkin-like spikes, single stamen, capsule fruit.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>164. EMPETRACEAE</summary>
+                                            <div class="family-desc-content">Heath-like evergreen shrubs. Leaves small, crowded. Flowers small, unisexual or bisexual, berry-like drupe.</div>
+                                        </details>
+                                        <details class="family-card-collapsible">
+                                            <summary>165. CERATOPHYLLEAE</summary>
+                                            <div class="family-desc-content">Submerged rootless aquatic herbs. Leaves whorled, dichotomously dissected. Flowers unisexual, solitary.</div>
+                                        </details>
+                                    </div>
+                                </details>
+                            </div>
+                        </details>
                     </div>
-                </div>
+                </details>
             </div>
-        </div>
- 
+        </details>
         <!-- GYMNOSPERMS CARD -->
-        <div class="top-level-card" style="border-top: 4px solid var(--color-gymno);">
-            <div class="top-level-header" style="background-color: var(--color-gymno);">
+        <details class="top-level-card" open style="border-top: 4px solid var(--color-gymno);">
+            <summary class="top-level-header" style="background-color: var(--color-gymno);">
                 GYMNOSPERMS
-                <div class="top-level-desc">Naked seeded Plants without Vessels</div>
-            </div>
+                <div class="top-level-desc">Naked seeded plants, vessels absent in xylem, cones present</div>
+            </summary>
+            
             <div class="gymno-content">
-                <div class="gymno-card" style="border-left-color: #3498db;">
-                    <div class="gymno-title" style="background-color: #3498db;">Gnetales</div>
-                    <div class="gymno-desc">No vessel elements in their wood. Compound cones with fleshy seeds.</div>
-                </div>
-                <div class="gymno-card" style="border-left-color: #2ecc71;">
-                    <div class="gymno-title" style="background-color: #2ecc71;">Coniferales (Conifers)</div>
-                    <div class="gymno-desc">Cone-bearing nature and their needle-like or scale-like leaves.</div>
-                </div>
-                <div class="gymno-card" style="border-left-color: #e74c3c;">
-                    <div class="gymno-title" style="background-color: #e74c3c;">Cycadales (Cycads)</div>
-                    <div class="gymno-desc">Produce conspicuously large cones front like leaves.</div>
-                </div>
+                <div class="gymno-card" style="border-left: 3px solid #3498db;">
+                                    <details class="family-card-collapsible" style="border-color: #3498db;">
+                                        <summary style="color: #3498db; font-weight:700;">166. GNETACEAE</summary>
+                                        <div class="family-desc-content" style="border-top-color: #3498db; color: #34495e;">Vessels present in xylem. Leaves opposite, broad. Cones compound with outer envelope.</div>
+                                    </details>
+                                </div>
+                <div class="gymno-card" style="border-left: 3px solid #2ecc71;">
+                                    <details class="family-card-collapsible" style="border-color: #2ecc71;">
+                                        <summary style="color: #2ecc71; font-weight:700;">167. CONIFERAE</summary>
+                                        <div class="family-desc-content" style="border-top-color: #2ecc71; color: #34495e;">Wood without vessels. Needles/scale leaves, resin ducts. Unisexual cones, seeds winged or fleshy.</div>
+                                    </details>
+                                </div>
+                <div class="gymno-card" style="border-left: 3px solid #e74c3c;">
+                                    <details class="family-card-collapsible" style="border-color: #e74c3c;">
+                                        <summary style="color: #e74c3c; font-weight:700;">168. CYCADACEAE</summary>
+                                        <div class="family-desc-content" style="border-top-color: #e74c3c; color: #34495e;">Wood without vessels. Palm-like unbranched trunk, pinnate compound leaves. Large terminal cones.</div>
+                                    </details>
+                                </div>
             </div>
-        </div>
- 
+        </details>
         <!-- MONOCOTYLEDONS CARD -->
-        <div class="top-level-card" style="border-top: 4px solid var(--color-mono);">
-            <div class="top-level-header" style="background-color: var(--color-mono);">
+        <details class="top-level-card" open style="border-top: 4px solid var(--color-mono);">
+            <summary class="top-level-header" style="background-color: var(--color-mono);">
                 MONOCOTYLEDONS
-                <div class="top-level-desc">One cotyledon, closed vascular bundles, parallel venation, trimerous flowers</div>
-            </div>
+                <div class="top-level-desc">One cotyledon, parallel venation, trimerous flowers, scattered vascular bundles</div>
+            </summary>
+            
             <div class="mono-content">
-                <!-- MICROSPERMAE -->
-                <div class="mono-series-card" style="border-left: 4px solid #d35400;">
-                    <div class="mono-left" style="background-color: var(--color-hetero-bg);">
-                        <div class="mono-left-title" style="background-color: #d35400;">MICROSPERMAE</div>
-                        <div class="order-desc" style="margin-top: 3px;">Inferior ovary; minute seeds</div>
-                    </div>
-                    <div class="mono-right">
-                        <div class="family-card" style="border-left: 3px solid #d35400;">
-                            <div class="family-card-title">27. ORCHIDACEAE</div>
-                            <div class="family-card-desc">Perennial epiphytic herbs. 3-petaled zygomorphic flowers. Pollinia.</div>
+                <!-- SERIES MICROSPERMAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #d35400;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #d35400;">
+                            MICROSPERMAE
                         </div>
-                    </div>
-                </div>
-                
-                <!-- EPIGYNAE -->
-                <div class="mono-series-card" style="border-left: 4px solid #e67e22;">
-                    <div class="mono-left" style="background-color: var(--color-mono-bg1);">
-                        <div class="mono-left-title" style="background-color: #e67e22;">EPIGYNAE</div>
-                        <div class="order-desc" style="margin-top: 3px;">Inferior ovary; large seeds with copious endosperm</div>
-                    </div>
-                    <div class="mono-right">
-                        <div class="family-card" style="border-left: 3px solid #e67e22;">
-                            <div class="family-card-title">28. ZINGIBERACEAE</div>
-                            <div class="family-card-desc">Aromatic rhizomes, distichous leaves, spike inflorescence.</div>
+                        <div class="mono-series-desc">Ovary inferior, seeds very small, numerous, without endosperm.</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>169. HYDROCHARIDEAE</summary>
+                                            <div class="family-desc-content">Submerged or floating aquatic herbs. Flowers regular, unisexual, spathe present, inferior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>170. BURMANNIACEAE</summary>
+                                            <div class="family-desc-content">Small autotrophic or saprophytic herbs. Flowers regular, perianth tubular, winged ovary, inferior.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>171. ORCHIDEAE</summary>
+                                            <div class="family-desc-content">Epiphytic/terrestrial herbs. Zygomorphic resupinate flowers, pollinia, column (gynostemium).</div>
+                                        </details>
                         </div>
-                        <div class="family-card" style="border-left: 3px solid #e67e22;">
-                            <div class="family-card-title">29. AMARYLLIDACEAE</div>
-                            <div class="family-card-desc">Bulbous herbs, actinomorphic, inferior ovary.</div>
+                    </details>
+                </details>
+                <!-- SERIES EPIGYNAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #e67e22;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #e67e22;">
+                            EPIGYNAE
                         </div>
-                    </div>
-                </div>
- 
-                <!-- CORONARIAE -->
-                <div class="mono-series-card" style="border-left: 4px solid #f39c12;">
-                    <div class="mono-left" style="background-color: #d5f5e3;">
-                        <div class="mono-left-title" style="background-color: #f39c12;">CORONARIAE</div>
-                        <div class="order-desc" style="margin-top: 3px;">Perianth petaloid; superior ovary</div>
-                    </div>
-                    <div class="mono-right">
-                        <div class="family-card" style="border-left: 3px solid #f39c12;">
-                            <div class="family-card-title">30. LILIACEAE</div>
-                            <div class="family-card-desc">Bulbs/corms, parallel-veined leaves, actinomorphic flowers.</div>
+                        <div class="mono-series-desc">Ovary inferior, seeds large with abundant endosperm.</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>172. SCITAMINEAE</summary>
+                                            <div class="family-desc-content">Aromatic rhizomatous herbs. Zygomorphic flowers, 1 fertile stamen or staminodes, inferior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>173. BROMELIACEAE</summary>
+                                            <div class="family-desc-content">Epiphytic herbs. Leaves xerophytic in a rosette. Flowers regular, colorful bracts, inferior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>174. HAEMODORACEAE</summary>
+                                            <div class="family-desc-content">Perennial herbs. Leaves equitant. Flowers regular, perianth persistent, ovary inferior or superior.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>175. IIRIDEAE</summary>
+                                            <div class="family-desc-content">Perennial herbs with bulbs/rhizomes. Leaves equitant. Flowers regular or irregular, stamens 3, inferior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>176. AMARYLLIDEAE</summary>
+                                            <div class="family-desc-content">Bulbous herbs. Scapose umbellate inflorescence with spathe. Flowers regular, trimerous, inferior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>177. TACCACEAE</summary>
+                                            <div class="family-desc-content">Tuberous herbs. Leaves large. Inflorescence umbel-like with long thread-like bracts, inferior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>178. DIOSCOREACEAE</summary>
+                                            <div class="family-desc-content">Twining vines with tuberous rhizomes. Leaves palmate. Flowers small, unisexual, inferior ovary.</div>
+                                        </details>
                         </div>
-                        <div class="family-card" style="border-left: 3px solid #f39c12;">
-                            <div class="family-card-title">31. COMMELINACEAE</div>
-                            <div class="family-card-desc">Flattened leaf sheaths, zygomorphic (2 large, 3 small petals).</div>
+                    </details>
+                </details>
+                <!-- SERIES CORONARIAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #f39c12;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #f39c12;">
+                            CORONARIAE
                         </div>
-                    </div>
-                </div>
- 
-                <div class="mono-series-card" style="border-left: 4px solid #8e44ad;">
-                    <div class="mono-left" style="background-color: #fdfdfd; flex: 1; border-right: none;">
-                        <div class="mono-left-title" style="background-color: #8e44ad;">CALYCINAE</div>
-                    </div>
-                </div>
- 
-                <!-- NUDIFLORAE -->
-                <div class="mono-series-card" style="border-left: 4px solid #c0392b;">
-                    <div class="mono-left" style="background-color: var(--color-curve-bg);">
-                        <div class="mono-left-title" style="background-color: #c0392b;">NUDIFLORAE</div>
-                        <div class="order-desc" style="margin-top: 3px;">Perianth absent or minute scales</div>
-                    </div>
-                    <div class="mono-right">
-                        <div class="family-card" style="border-left: 3px solid #c0392b;">
-                            <div class="family-card-title">32. ARACEAE</div>
-                            <div class="family-card-desc">Spadix inflorescence, simple leaves, unisexual flowers.</div>
+                        <div class="mono-series-desc">Perianth colorful and petaloid, ovary superior.</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>179. ROXBURGHIACEAE</summary>
+                                            <div class="family-desc-content">Climbing shrubs or herbs. Leaves opposite. Flowers regular, tetramerous, capsule fruit.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>180. LILIACEAE</summary>
+                                            <div class="family-desc-content">Bulbous/cormous herbs. Flowers regular, trimerous, 6 tepals, 6 stamens, superior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>181. PONTEDERIACEAE</summary>
+                                            <div class="family-desc-content">Aquatic herbs, petioles often swollen. Flowers regular, 6 tepals blue or purple, superior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>182. PHILYDRACEAE</summary>
+                                            <div class="family-desc-content">Herbs with equitant leaves. Flowers zygomorphic, perianth of 2 large tepals, single stamen.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>183. XYRIDEAE</summary>
+                                            <div class="family-desc-content">Tufted rush-like herbs. Flowers yellow in dense spikes with imbricate bracts, capsule fruit.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>184. MAYACEAE</summary>
+                                            <div class="family-desc-content">Small moss-like aquatic herbs. Leaves small, linear. Flowers regular, trimerous, superior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>185. COMMELINACEAE</summary>
+                                            <div class="family-desc-content">Succulent herbs, closed leaf sheaths. Flowers trimerous, sepals and petals distinct, superior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>186. RAPATEACEAE</summary>
+                                            <div class="family-desc-content">Perennial herbs. Leaves in a rosette. Inflorescence head-like on a long scape, capsule fruit.</div>
+                                        </details>
                         </div>
-                    </div>
-                </div>
- 
-                <div class="mono-series-card" style="border-left: 4px solid #2980b9;">
-                    <div class="mono-left" style="background-color: #fdfdfd; flex: 1; border-right: none;">
-                        <div class="mono-left-title" style="background-color: #2980b9;">APOCARPAE</div>
-                    </div>
-                </div>
- 
-                <!-- GLUMACEAE -->
-                <div class="mono-series-card" style="border-left: 4px solid #f1c40f;">
-                    <div class="mono-left" style="background-color: #fcf3cf;">
-                        <div class="mono-left-title" style="background-color: #f1c40f; color: #333;">GLUMACEAE</div>
-                        <div class="order-desc" style="margin-top: 3px;">Scaly/glumaceous perianth; one-ovuled ovary</div>
-                    </div>
-                    <div class="mono-right">
-                        <div class="family-card" style="border-left: 3px solid #f1c40f;">
-                            <div class="family-card-title">33. CYPERACEAE</div>
-                            <div class="family-card-desc">Grass-like, solid stems, 3-ranked leaves, spikelets.</div>
+                    </details>
+                </details>
+                <!-- SERIES CALYCINAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #8e44ad;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #8e44ad;">
+                            CALYCINAE
                         </div>
-                        <div class="family-card" style="border-left: 3px solid #f1c40f;">
-                            <div class="family-card-title">34. GRAMINEAE</div>
-                            <div class="family-card-desc">Hollow stems, 2-ranked leaves, caryopsis fruit.</div>
+                        <div class="mono-series-desc">Perianth sepaloid or dry (green/brown), ovary superior.</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>187. FLAGELLARIEAE</summary>
+                                            <div class="family-desc-content">Climbers with leaf tips modified into tendrils. Flowers small, regular, drupe fruit.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>188. JUNCACEAE</summary>
+                                            <div class="family-desc-content">Rush-like tufted herbs. Leaves linear or reduced. Flowers small, dry and chaffy, superior ovary.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>189. PALMAE</summary>
+                                            <div class="family-desc-content">Woody plants with unbranched trunk and terminal crown of pinnate/palmate leaves. Berry or drupe fruit.</div>
+                                        </details>
                         </div>
-                    </div>
-                </div>
+                    </details>
+                </details>
+                <!-- SERIES NUDIFLORAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #c0392b;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #c0392b;">
+                            NUDIFLORAE
+                        </div>
+                        <div class="mono-series-desc">Perianth absent or reduced to small scales/bristles, ovary superior.</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>190. PANDANEAE</summary>
+                                            <div class="family-desc-content">Shrubs or trees with stilt roots, leaves linear and spiny-margined in spirals. Dioecious, syncarp fruit.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>191. CYCLANTHACEAE</summary>
+                                            <div class="family-desc-content">Palm-like or climbing herbs. Leaves deeply bifid. Inflorescence spadix with deciduous spathes.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>192. TYPHACEAE</summary>
+                                            <div class="family-desc-content">Marsh herbs. Leaves linear. Inflorescence a dense terminal cylindrical spike of unisexual flowers.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>193. AROIDEAE</summary>
+                                            <div class="family-desc-content">Tuberous herbs, leaves broad. Spadix inflorescence enclosed by a spathe, berries.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>194. LEMNACEAE</summary>
+                                            <div class="family-desc-content">Tiny floating thalloid aquatics without distinct stem or leaves. Flowers minute, unisexual.</div>
+                                        </details>
+                        </div>
+                    </details>
+                </details>
+                <!-- SERIES APOCARPAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #2980b9;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #2980b9;">
+                            APOCARPAE
+                        </div>
+                        <div class="mono-series-desc">Ovary superior, composed of free carpels (apocarpous).</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>195. TRIURIDEAE</summary>
+                                            <div class="family-desc-content">Small saprophytic herbs without chlorophyll. Flowers unisexual, carpels numerous and free.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>196. ALISMACEAE</summary>
+                                            <div class="family-desc-content">Marsh or aquatic herbs. Leaves long-petioled. Flowers regular, sepals 3 green, petals 3 white, carpels numerous.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>197. NAIADACEAE</summary>
+                                            <div class="family-desc-content">Submerged marine or freshwater herbs. Flowers tiny, unisexual, apetalous.</div>
+                                        </details>
+                        </div>
+                    </details>
+                </details>
+                <!-- SERIES GLUMACEAE -->
+                <details class="mono-series-card" style="border-left: 3px solid #f1c40f;">
+                    <summary class="mono-series-header">
+                        <div class="mono-left-title" style="background-color: #f1c40f;">
+                            GLUMACEAE
+                        </div>
+                        <div class="mono-series-desc">Flowers in spikelets, enclosed by scale-like bracts (glumes), perianth reduced/chaffy.</div>
+                    </summary>
+                    <details class="order-row virtual-order-row">
+                        <summary style="display: none;"></summary>
+                        <div class="families-flex-container">
+                        <details class="family-card-collapsible">
+                                            <summary>198. ERIOCAULEAE</summary>
+                                            <div class="family-desc-content">Tufted herbs. Inflorescence a small dense globose head of tiny unisexual flowers with scarious bracts.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>199. CENTROLEPIDEAE</summary>
+                                            <div class="family-desc-content">Small tufted moss-like herbs. Flowers tiny, enclosed in scarious bracts.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>200. RESTIACEAE</summary>
+                                            <div class="family-desc-content">Rush-like herbs with tufted stems. Leaves reduced to sheaths. Dioecious, dry chaffy perianth.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>201. CYPERACEAE</summary>
+                                            <div class="family-desc-content">Sedges, solid 3-angled stems, 3-ranked leaves. Flowers in spikelets, perianth of bristles, achene fruit.</div>
+                                        </details>
+                        <details class="family-card-collapsible">
+                                            <summary>202. GRAMINEAE</summary>
+                                            <div class="family-desc-content">Grasses, round hollow stems, 2-ranked leaves. Inflorescence spikelet, caryopsis fruit.</div>
+                                        </details>
+                        </div>
+                    </details>
+                </details>
             </div>
-        </div>
+        </details>
     </div>
+</details>
     
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #2c3e50; color: white; border-top: 2px solid #1a252f;">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: #2f3542; color: white; border-top: 2px solid #747d8c;">
         <div style="font-size: 10px; opacity: 0.8;">
-            Prepared by
+            Total Families: 202 (Complete Bentham &amp; Hooker System)
         </div>
-        <div style="text-align: right; font-size: 11px; font-weight: bold;">
-            Dr. Suresh V, Department of Botany, Government Victoria College, Palakkad, Kerala
+        <div style="text-align: right; font-size: 11px; font-weight: bold; color: #f1c40f;">
+            Prepared by: Dr. Suresh V, Department of Botany, Government Victoria College, Palakkad, Kerala
         </div>
     </div>
 </div>
 
+<div class="no-print" style="text-align: center; padding: 12px; background-color: #2f3542; border-top: 1px solid #747d8c;">
+    <button onclick="window.print()" style="padding: 8px 20px; font-size: 13px; cursor: pointer; background: #e1b12c; color: #2f3542; border: none; border-radius: 4px; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.3); transition: all 0.2s;">🖨️ Print Complete Chart (Fits 1 Page)</button>
+</div>
+<script>
+    let isToggling = false;
+
+    function updateButtonLabels() {
+        const configs = [
+            { btnId: 'btn-subclasses', selector: 'details.subclass-card' },
+            { btnId: 'btn-series', selector: 'details.series-block, details.mono-series-card' },
+            { btnId: 'btn-orders', selector: 'details.order-row' },
+            { btnId: 'btn-families', selector: 'details.family-card-collapsible' }
+        ];
+        
+        configs.forEach(cfg => {
+            const btn = document.getElementById(cfg.btnId);
+            if (!btn) return;
+            const elements = document.querySelectorAll(cfg.selector);
+            if (elements.length === 0) return;
+            
+            let openCount = 0;
+            elements.forEach(el => { if (el.open) openCount++; });
+            
+            if (openCount > elements.length / 2) {
+                btn.textContent = "Collapse All";
+            } else {
+                btn.textContent = "Expand All";
+            }
+        });
+    }
+
+    function toggleGroupDynamic(btn, selector) {
+        isToggling = true;
+        const elements = document.querySelectorAll(selector);
+        const isExpand = btn.textContent.includes("Expand");
+        
+        elements.forEach(el => {
+            el.open = isExpand;
+        });
+        
+        if (isExpand) {
+            // Open all parents of these elements
+            elements.forEach(el => {
+                let parent = el.parentElement.closest('details');
+                while (parent) {
+                    parent.open = true;
+                    parent = parent.parentElement.closest('details');
+                }
+            });
+        }
+        
+        updateButtonLabels();
+        isToggling = false;
+    }
+
+    // Hook up event listeners for manual click toggles
+    document.querySelectorAll('details').forEach(details => {
+        details.addEventListener('toggle', (event) => {
+            if (isToggling) return;
+            isToggling = true;
+            
+            try {
+                if (details.open) {
+                    // Expand parents too
+                    let parent = details.parentElement.closest('details');
+                    while (parent) {
+                        parent.open = true;
+                        parent = parent.parentElement.closest('details');
+                    }
+                    
+                    // Also auto-expand virtual order rows so families are immediately visible!
+                    const virtualOrders = details.querySelectorAll('details.virtual-order-row');
+                    virtualOrders.forEach(v => { v.open = true; });
+                }
+            } finally {
+                isToggling = false;
+                updateButtonLabels();
+            }
+        });
+    });
+
+    // Initialize button labels on load
+    document.addEventListener('DOMContentLoaded', () => {
+        isToggling = true;
+        
+        // 1. Ensure Super-classes and Top-level classes (Dicot, Gymno, Monocot) are open
+        document.querySelectorAll('details.super-class-card, details.top-level-card').forEach(el => {
+            el.open = true;
+        });
+
+        // 2. Ensure Subclasses (Polypetalae, Gamopetalae, Monochlamydeae) are open
+        document.querySelectorAll('details.subclass-card').forEach(el => {
+            el.open = true;
+        });
+
+        // 3. Ensure Series and Orders and Families are closed on startup
+        document.querySelectorAll('details.series-block, details.mono-series-card, details.order-row, details.family-card-collapsible').forEach(el => {
+            el.open = false;
+        });
+
+        isToggling = false;
+        updateButtonLabels();
+    });
+</script>
 </body>
 </html>
