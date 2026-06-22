@@ -388,7 +388,7 @@
         list-style: none;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start; /* Removed justify-content: space-between to align content next to the arrow */
     }
     details.series-block summary.series-summary-header::-webkit-details-marker {
         display: none;
@@ -617,7 +617,7 @@
     }
     details.mono-series-card summary.mono-series-header {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start; /* Removed justify-content: space-between to align content next to the arrow */
         align-items: center;
         padding: 5px;
         cursor: pointer;
@@ -2192,6 +2192,24 @@
 
     // Initialize button labels on load
     document.addEventListener('DOMContentLoaded', () => {
+        isToggling = true;
+        
+        // 1. Ensure Super-classes and Top-level classes (Dicot, Gymno, Monocot) are open
+        document.querySelectorAll('details.super-class-card, details.top-level-card').forEach(el => {
+            el.open = true;
+        });
+
+        // 2. Ensure Subclasses (Polypetalae, Gamopetalae, Monochlamydeae) are open
+        document.querySelectorAll('details.subclass-card').forEach(el => {
+            el.open = true;
+        });
+
+        // 3. Ensure Series and Orders and Families are closed on startup
+        document.querySelectorAll('details.series-block, details.mono-series-card, details.order-row, details.family-card-collapsible').forEach(el => {
+            el.open = false;
+        });
+
+        isToggling = false;
         updateButtonLabels();
     });
 </script>
