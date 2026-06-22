@@ -2178,6 +2178,10 @@
                         parent.open = true;
                         parent = parent.parentElement.closest('details');
                     }
+                    
+                    // Also auto-expand virtual order rows so families are immediately visible!
+                    const virtualOrders = details.querySelectorAll('details.virtual-order-row');
+                    virtualOrders.forEach(v => { v.open = true; });
                 }
             } finally {
                 isToggling = false;
